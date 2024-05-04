@@ -1,0 +1,9 @@
+.updatediv{
+    background-color: rgb(206, 249, 177);
+    width: 40vw;
+    height: 70vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 50px 350px;
+}

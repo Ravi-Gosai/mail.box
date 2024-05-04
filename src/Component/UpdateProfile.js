@@ -1,6 +1,7 @@
 import React, { useContext, useState } from 'react'
 import AuthContext from '../auth-context'
 import { useLocation, useNavigate } from 'react-router'
+import './UpdateProfile.css'
 
 const UpdateProfile = () => {
 const [username , setUserame] = useState('')
@@ -30,7 +31,9 @@ const submitHandler = (e)=>{
     })
 }
   return (
-    <div>
+    <>
+    
+    <div className='updatediv'>
       <form onSubmit={submitHandler}>
         <h1>contact details</h1>
         <br></br>
@@ -48,6 +51,7 @@ const submitHandler = (e)=>{
         <button type='button' onClick={()=> navigate('/welcome')}> close</button>
       </form>
     </div>
+    </>
   )
 }
 

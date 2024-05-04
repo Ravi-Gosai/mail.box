@@ -1,9 +1,11 @@
 import React, { useContext, useEffect, useState } from 'react'
-import { NavLink } from 'react-router-dom'
+import { NavLink, useNavigate } from 'react-router-dom'
 import AuthContext from '../auth-context'
+import './WelcomePage.css'
 
 const WelComePage = () => {
 
+  const navigate = useNavigate()
   const authCtx = useContext(AuthContext)
   const [usersDetails, setUserDetails] = useState({
     photoUrl : '',
@@ -47,12 +49,17 @@ const emailVerifyHandler = ()=>{
   })
 }
   
+const logoutHandler = ()=>{
+  authCtx.logout()
+  navigate('/')
+
+}
   return (
     <>
       <header className='header'>
-        <h1>welcome to expense treacker</h1> 
-        <div><p> your profile is incomplate <NavLink state={usersDetails} to='/update'>update here</NavLink></p> </div>
-        <button onClick={emailVerifyHandler}> verify email {usersDetails.email}</button>
+        <h1>welcome to expense treacker </h1> 
+        <div><p> your profile is incomplate <NavLink state={usersDetails} to='/update'>update here</NavLink></p> <button onClick={logoutHandler}> logout </button><button onClick={emailVerifyHandler}> verify email {usersDetails.email}</button></div>
+        
       </header>
     </>
   )
