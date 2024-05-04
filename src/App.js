@@ -6,6 +6,7 @@ import AuthForm from './Component/AuthForm';
 
 import Layout from './Component/Layout';
 import WelComePage from './Component/WelComePage';
+import UpdateProfile from './Component/UpdateProfile';
 
 
 function App() {
@@ -17,6 +18,7 @@ function App() {
 <Routes>
     <Route path='/' element={<AuthForm/>}></Route>
   <Route path='/welcome' element={<WelComePage/>}></Route>
+  <Route path='/update' element={<UpdateProfile/>}></Route>
 </Routes>
     {/* <div className="App">
     <AuthForm></AuthForm>
