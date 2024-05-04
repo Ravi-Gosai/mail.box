@@ -1,13 +1,14 @@
 import React, { useContext, useState } from 'react'
 import AuthContext from '../auth-context'
-import { useNavigate } from 'react-router'
+import { useLocation, useNavigate } from 'react-router'
 
 const UpdateProfile = () => {
 const [username , setUserame] = useState('')
 const [photoUrl, setPhotoUrl] = useState('')
 
 const authCtx = useContext(AuthContext)
-
+const location = useLocation()
+console.log(location.state,'loc')
 const navigate = useNavigate()
 const submitHandler = (e)=>{
     e.preventDefault()
@@ -34,11 +35,11 @@ const submitHandler = (e)=>{
         <h1>contact details</h1>
         <br></br>
         <label htmlFor='username'>Full name</label>
-        <input id='username' type="text" onChange={(e)=>setUserame(e.target.value)} />
+        <input value={location.state.displayName} id='username' type="text" onChange={(e)=>setUserame(e.target.value)} />
         <br></br>
         <br></br>
         <label htmlFor='photourl'> photo Url</label>
-        <input id='photourl' type="text" onChange={(e)=>setPhotoUrl(e.target.value)} />
+        <input  value={location.state.photoUrl} id='photourl' type="text" onChange={(e)=>setPhotoUrl(e.target.value)} />
         <br></br>
         <br></br>
         <button type='submit'> update</button>
