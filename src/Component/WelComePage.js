@@ -7,7 +7,8 @@ const WelComePage = () => {
   const authCtx = useContext(AuthContext)
   const [usersDetails, setUserDetails] = useState({
     photoUrl : '',
-    displayName : ''
+    displayName : '',
+    email :'r'
   })
 
   useEffect(()=>{
@@ -25,16 +26,33 @@ const WelComePage = () => {
         return res.json()
       }
     }).then((data)=>{
-      console.log(data.users[0])
+      // console.log(data.users[0])
       setUserDetails(data.users[0])
     })
       
   },[authCtx.token])
+const emailVerifyHandler = ()=>{
+
+  fetch('https://identitytoolkit.googleapis.com/v1/accounts:sendOobCode?key=AIzaSyCur9xCsh35ycJRAqP2U3DynKEpK8MDbj8',{
+    method : 'POST',
+    body : JSON.stringify({
+      requestType : 'VERIFY_EMAIL',
+      idToken : authCtx.token
+    }),
+    headers :{
+      'Content-Type' : 'applicaton/json'
+    }
+  }).then((res)=>{
+    console.log(res,'vvvvv')
+  })
+}
+  
   return (
     <>
       <header className='header'>
         <h1>welcome to expense treacker</h1> 
-        <div><p> your profile is incomplate <NavLink state={usersDetails} to='/update'> complate now</NavLink></p> </div>
+        <div><p> your profile is incomplate <NavLink state={usersDetails} to='/update'>update here</NavLink></p> </div>
+        <button onClick={emailVerifyHandler}> verify email {usersDetails.email}</button>
       </header>
     </>
   )
