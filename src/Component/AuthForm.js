@@ -2,6 +2,7 @@ import { useState, useRef, useContext } from "react";
 
 import classes from "./AuthForm.module.css";
 import AuthContext from "../auth-context";
+import { useNavigate } from "react-router";
 // import { useNavigate } from "react-router";
 
 const AuthForm = () => {
@@ -11,6 +12,8 @@ const AuthForm = () => {
   const inputPasswordRef = useRef();
   const inputConfirmPasswordRef = useRef();
 
+
+  const navigate = useNavigate()
   const authCtx = useContext(AuthContext);
   //   const history = useHistory()
   console.log(authCtx);
@@ -75,7 +78,7 @@ const AuthForm = () => {
       .then((data) => {
         console.log(data);
         authCtx.login(data.idToken);
-        //   history.replace('/')
+        navigate('/welcome')
       })
       .catch((err) => {
         alert(err.message);

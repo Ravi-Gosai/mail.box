@@ -1,16 +1,28 @@
 
+import { Route, Routes } from 'react-router';
+
 import './App.css';
 import AuthForm from './Component/AuthForm';
-import { AuthContextProvider } from './auth-context';
+
+import Layout from './Component/Layout';
+import WelComePage from './Component/WelComePage';
+
 
 function App() {
-  return (
-    <AuthContextProvider>
 
-    <div className="App">
+ 
+  return (
+    <Layout>
+   
+<Routes>
+    <Route path='/' element={<AuthForm/>}></Route>
+  <Route path='/welcome' element={<WelComePage/>}></Route>
+</Routes>
+    {/* <div className="App">
     <AuthForm></AuthForm>
-    </div>
-    </AuthContextProvider>
+    </div> */}
+   
+    </Layout>
   );
 }
 
