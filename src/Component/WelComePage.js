@@ -3,6 +3,7 @@ import { NavLink, useNavigate } from "react-router-dom";
 import AuthContext from "../auth-context";
 import classes from "./WelcomePage.module.css";
 import ExpenseItem from "./ExpenseItem";
+import { useCallback } from "react";
 
 const WelComePage = () => {
   const navigate = useNavigate();
@@ -42,6 +43,8 @@ const WelComePage = () => {
         setUserDetails(data.users[0]);
       });
   }, [authCtx.token]);
+
+
   const emailVerifyHandler = () => {
     fetch(
       "https://identitytoolkit.googleapis.com/v1/accounts:sendOobCode?key=AIzaSyCur9xCsh35ycJRAqP2U3DynKEpK8MDbj8",
@@ -66,18 +69,77 @@ const WelComePage = () => {
   };
 
 
-  const expenseFormHandler = (e)=>{
+  // const expenseFormHandler = (e)=>{
+  //   e.preventDefault()
+  //   console.log(expenseMoney,expenseDescription,expenseCategory)
+    // let obj = {
+    //   expensemoney : expenseMoney,
+    //   expensecategory:expenseCategory,
+    //   expensedescription: expenseDescription,
+    //   id : Math.random()
+    // }
+
+  //   setExpenseList([...expenseList,obj])
+  // }
+  const fetchExpenseHandler =  useCallback( async () => {
+ 
+    try {
+      const response = await fetch("https://authproject-16084-default-rtdb.firebaseio.com/expense.json");
+      console.log(response);
+      if (!response.ok) {
+        throw new Error("something went wrong ..retrying");
+      }
+      const dataJson = await response.json();
+      console.log(dataJson);
+      const loadedexpense = []
+    
+      for(let key in dataJson){
+        loadedexpense.push({
+          id : key,
+          expensemoney : dataJson[key].expensemoney,
+          expensecategory : dataJson[key].expensecategory,
+          expensedescription : dataJson[key].expensedescription
+        })
+      }
+      
+
+      
+      setExpenseList(loadedexpense);
+    } catch (error) {
+      console.log(error.message);
+     
+     
+    }
+   
+  },[])
+
+
+  const expenseFormHandler =  async (e)=>{
+    // console.log(expense)
     e.preventDefault()
-    console.log(expenseMoney,expenseDescription,expenseCategory)
     let obj = {
       expensemoney : expenseMoney,
       expensecategory:expenseCategory,
       expensedescription: expenseDescription,
-      id : Math.random()
+      // id : Math.random()
     }
-
-    setExpenseList([...expenseList,obj])
+   const response = await fetch('https://authproject-16084-default-rtdb.firebaseio.com/expense.json',{
+      method: 'POST',
+      body : JSON.stringify(obj),
+      headers : {
+        'Content-Type' : 'application/json'
+      }
+    })
+    const data = await response.json()
+    // console.log(data) 
+    fetchExpenseHandler()
   }
+
+  useEffect(()=>{
+    fetchExpenseHandler()
+  },[fetchExpenseHandler])
+
+
   return (
     <>
       <header className={classes.header}>
