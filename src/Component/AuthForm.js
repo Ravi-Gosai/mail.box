@@ -12,8 +12,7 @@ const AuthForm = () => {
   const inputPasswordRef = useRef();
   const inputConfirmPasswordRef = useRef();
 
-
-  const navigate = useNavigate()
+  const navigate = useNavigate();
   const authCtx = useContext(AuthContext);
   //   const history = useHistory()
   console.log(authCtx);
@@ -27,19 +26,17 @@ const AuthForm = () => {
     const enteredEmail = inputEmailRef.current.value;
     const enteredPassword = inputPasswordRef.current.value;
     setIsLoading(true);
-    
-    
+
     let url;
     if (isLogin) {
-        url =
+      url =
         "https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key=AIzaSyCur9xCsh35ycJRAqP2U3DynKEpK8MDbj8";
     } else {
-        
-        const enteredConfirmPassword = inputConfirmPasswordRef.current.value;
-        if(enteredConfirmPassword !== enteredPassword){
-            setIsLoading(false)
-            return alert('password not match')
-        }
+      const enteredConfirmPassword = inputConfirmPasswordRef.current.value;
+      if (enteredConfirmPassword !== enteredPassword) {
+        setIsLoading(false);
+        return alert("password not match");
+      }
       url =
         "https://identitytoolkit.googleapis.com/v1/accounts:signUp?key=AIzaSyCur9xCsh35ycJRAqP2U3DynKEpK8MDbj8";
     }
@@ -78,11 +75,32 @@ const AuthForm = () => {
       .then((data) => {
         console.log(data);
         authCtx.login(data.idToken);
-        navigate('/welcome')
+        navigate("/welcome");
       })
       .catch((err) => {
         alert(err.message);
       });
+  };
+
+  const forgotPasswordHandler = () => {
+    const enteredEmail = inputEmailRef.current.value;
+    console.log(enteredEmail);
+    fetch(
+      "https://identitytoolkit.googleapis.com/v1/accounts:sendOobCode?key=AIzaSyCur9xCsh35ycJRAqP2U3DynKEpK8MDbj8",
+      {
+        method: "POST",
+        body: JSON.stringify({
+          requestType: "PASSWORD_RESET",
+          email: enteredEmail,
+        }),
+        headers: {
+          "Content-Type": "application/json",
+        },
+      }
+    ).then((res) => {
+      console.log(res);
+      alert('password reset link send to your email')
+    });
   };
 
   return (
@@ -144,7 +162,21 @@ const AuthForm = () => {
             {isLogin ? "Create new account" : "Login with existing account"}
           </button>
         </div>
+        {isLogin && (
+          <div className={classes.actions}>
+            <button
+              type="button"
+              className={classes.toggle}
+              onClick={forgotPasswordHandler}
+            >
+              forgot Password plz enter only email and click here
+            </button>
+
+         
+          </div>
+        )}
       </form>
+      
     </section>
   );
 };
