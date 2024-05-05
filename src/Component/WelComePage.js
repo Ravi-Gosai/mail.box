@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState } from "react";
+import React, { useContext, useEffect, useRef, useState } from "react";
 import { NavLink, useNavigate } from "react-router-dom";
 import AuthContext from "../auth-context";
 import classes from "./WelcomePage.module.css";
@@ -18,6 +18,8 @@ const WelComePage = () => {
   const [expenseMoney, setExpenseMoney] = useState("");
   const [expenseDescription, setExpenseDescription] = useState("");
   const [expenseCategory, setExpenseCategory] = useState("");
+  const [editExpense, setEditExpense] = useState(false);
+  const idRef = useRef('')
 
   useEffect(() => {
     fetch(
@@ -117,6 +119,9 @@ const WelComePage = () => {
   const expenseFormHandler =  async (e)=>{
     // console.log(expense)
     e.preventDefault()
+    if(expenseCategory === ''){
+      setExpenseCategory('food')
+    }
     let obj = {
       expensemoney : expenseMoney,
       expensecategory:expenseCategory,
@@ -139,6 +144,51 @@ const WelComePage = () => {
     fetchExpenseHandler()
   },[fetchExpenseHandler])
 
+
+  const deleteExpenseFun = async (id)=>{
+    console.log(id)
+    await fetch(`https://authproject-16084-default-rtdb.firebaseio.com/expense/${id}.json`,{
+      method: 'DELETE'
+    })
+    fetchExpenseHandler()
+
+  }
+
+  const  editExpenseFun = (exp)=>{
+    console.log(exp)
+    setEditExpense(true)
+    setExpenseCategory(exp.expensecategory)
+    setExpenseDescription(exp.expensedescription)
+    setExpenseMoney(exp.expensemoney)
+    idRef.current = exp.id
+  }
+
+  const expenseUpadateHandler = ()=>{
+
+    let obj = {
+      expensemoney : expenseMoney,
+      expensecategory:expenseCategory,
+      expensedescription: expenseDescription,
+      // id : Math.random()
+    }
+    fetch(`https://authproject-16084-default-rtdb.firebaseio.com/expense/${idRef.current}.json`,{
+      method : "PUT",
+      body : JSON.stringify(obj),
+      headers :{
+        'Content-Type' : 'application/json'
+      }
+    }).then((res)=>{
+      console.log(res)
+      fetchExpenseHandler()
+      setEditExpense(false)
+    setExpenseCategory('')
+    setExpenseDescription('')
+    setExpenseMoney('')
+    idRef.current = ''
+    alert('update Item Succussfully')
+    })
+    
+  }
 
   return (
     <>
@@ -165,27 +215,30 @@ const WelComePage = () => {
         <form onSubmit={expenseFormHandler}> 
           <div className={classes.control}>
             <label htmlFor="money">money</label>
-            <input type="number" id="money"  onChange={(e) => { setExpenseMoney(e.target.value)}} />
+            <input value={expenseMoney} type="number" id="money"  onChange={(e) => { setExpenseMoney(e.target.value)}} />
           </div>
           <div className={classes.control}>
             <label htmlFor="description">description</label>
-            <input type="text" id="description"  onChange={(e) => { setExpenseDescription(e.target.value)}} />
+            <input value={expenseDescription} type="text" id="description"  onChange={(e) => { setExpenseDescription(e.target.value)}} />
             <label htmlFor="category">Choose a : category</label>
 
-            <select name="category" id="category" onChange={(e) => { setExpenseCategory(e.target.value)}}>
+            <select  name="category" id="category" onChange={(e) => { setExpenseCategory(e.target.value)}}>
               <option value="food">food</option>
               <option value="petrol">petrol</option>
               <option value="moive">moive</option>
               <option value="rent">rent</option>
+              <option value="salary">salary</option>
+              <option value="travel">travel</option>
             </select>
           </div>
 
-          <button type="submit"> add Expense</button>
+          {!editExpense && <button type="submit"> add Expense</button>}
         </form>
+          {editExpense && <button type="button" onClick={expenseUpadateHandler}> Edit  And upadate</button>}
       </section>
 
       <section>
-        {expenseList.map((expense)=><ExpenseItem key={expense.id} exp={expense} />)}
+        {expenseList.map((expense)=><ExpenseItem onEditExpense={editExpenseFun} onDeleteExpense={deleteExpenseFun} key={expense.id} exp={expense} />)}
       </section>
     </>
   );

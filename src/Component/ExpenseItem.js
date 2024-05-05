@@ -3,6 +3,7 @@ import './ExpenseItem.css'
 const ExpenseItem = (props) => {
   return (
     <>
+    <div className='maindivwithbtn'>
       <li>
         <div className='expense'>
             expense money :{props.exp.expensemoney} rs
@@ -15,7 +16,14 @@ const ExpenseItem = (props) => {
             
             category : {props.exp.expensecategory}
         </div>
+       
+      
       </li>
+      <div className='divbtn'>
+          <button onClick={()=>props.onEditExpense(props.exp)}> edit </button>
+          <button onClick={()=>props.onDeleteExpense(props.exp.id)} > delete </button>
+        </div>
+      </div>
     </>
   )
 }
