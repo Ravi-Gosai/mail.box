@@ -6,10 +6,12 @@ import { BrowserRouter } from 'react-router-dom';
 import { configureStore } from '@reduxjs/toolkit';
 import authSlice from './store/authSlice';
 import { Provider } from 'react-redux';
+import  darkModeSlice  from './store/darkmodeSlice';
 
 const store = configureStore({
   reducer : {
-    auth : authSlice
+    auth : authSlice,
+    darkmode : darkModeSlice
   }
 })
 // console.log(store,'store')

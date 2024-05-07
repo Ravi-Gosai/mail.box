@@ -13,8 +13,16 @@ li{
     justify-content: center;
 }
 .maindivwithbtn{
-    background-color: antiquewhite;
+    background-color: rgb(110, 110, 80);
     border: 2px solid black;
     margin: 10px;
     
 }
+.maindivwithbtn.darkmode{
+    background-color: rgb(43, 40, 40);
+}
+li.darkmode{
+    background-color: rgb(188, 188, 185);
+    color: black;
+}
+

@@ -1,7 +1,7 @@
-import { useState, useRef, useContext } from "react";
+import { useState, useRef} from "react";
 
 import classes from "./AuthForm.module.css";
-import AuthContext from "../auth-context";
+// import AuthContext from "../auth-context";
 import { useNavigate } from "react-router";
 import { useDispatch } from "react-redux";
 // import { useNavigate } from "react-router";

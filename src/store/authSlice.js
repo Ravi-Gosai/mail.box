@@ -3,7 +3,8 @@ import { createSlice } from "@reduxjs/toolkit"
 const initialState = {
    token : localStorage.getItem('token'),
    isLoggedIn : false,
-   totalExpense : 0
+   totalExpense : 0,
+   downLoadExpense : []
 }
 
 export const authSlice = createSlice({
@@ -22,6 +23,9 @@ export const authSlice = createSlice({
        },
        expenseCounter(state, action){
         state.totalExpense = action.payload
+       },
+       downLoadExpense(state,acton){
+            state.downLoadExpense = [acton.payload]
        }
     }
 })

@@ -1,5 +1,5 @@
 import { createContext, useState } from "react";
-
+// aa project ma context na badha kam redux thi thay chhe to aano use nathi aa project ma
 
 const AuthContext = createContext({
     token: '',

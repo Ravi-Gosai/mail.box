@@ -1,5 +1,5 @@
-import React, { useContext, useState } from 'react'
-import AuthContext from '../auth-context'
+import React, {  useState } from 'react'
+// import AuthContext from '../auth-context'
 import { useLocation, useNavigate } from 'react-router'
 import './UpdateProfile.css'
 import { useSelector } from 'react-redux'
