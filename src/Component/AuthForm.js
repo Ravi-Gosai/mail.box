@@ -3,7 +3,9 @@ import { useState, useRef, useContext } from "react";
 import classes from "./AuthForm.module.css";
 import AuthContext from "../auth-context";
 import { useNavigate } from "react-router";
+import { useDispatch } from "react-redux";
 // import { useNavigate } from "react-router";
+import { authAction } from "../store/authSlice";
 
 const AuthForm = () => {
   const [isLogin, setIsLogin] = useState(true);
@@ -13,9 +15,12 @@ const AuthForm = () => {
   const inputConfirmPasswordRef = useRef();
 
   const navigate = useNavigate();
-  const authCtx = useContext(AuthContext);
+  // const authCtx = useContext(AuthContext);
   //   const history = useHistory()
-  console.log(authCtx);
+  // console.log(authCtx);
+  const dispatch = useDispatch()
+ 
+  
 
   const switchAuthModeHandler = () => {
     setIsLogin((prevState) => !prevState);
@@ -74,7 +79,9 @@ const AuthForm = () => {
       })
       .then((data) => {
         console.log(data);
-        authCtx.login(data.idToken);
+        // authCtx.login(data.idToken); \
+        dispatch(authAction.login(data.idToken))
+
         navigate("/welcome");
       })
       .catch((err) => {

@@ -2,12 +2,15 @@ import React, { useContext, useState } from 'react'
 import AuthContext from '../auth-context'
 import { useLocation, useNavigate } from 'react-router'
 import './UpdateProfile.css'
+import { useSelector } from 'react-redux'
 
 const UpdateProfile = () => {
 const [username , setUserame] = useState('')
 const [photoUrl, setPhotoUrl] = useState('')
 
-const authCtx = useContext(AuthContext)
+// const authCtx = useContext(AuthContext)
+
+const authToken = useSelector(state=>state.auth.token)
 const location = useLocation()
 console.log(location.state,'loc')
 const navigate = useNavigate()
@@ -18,7 +21,7 @@ const submitHandler = (e)=>{
     fetch('https://identitytoolkit.googleapis.com/v1/accounts:update?key=AIzaSyCur9xCsh35ycJRAqP2U3DynKEpK8MDbj8',{
         method :'POST',
         body : JSON.stringify({
-            idToken : authCtx.token,
+            idToken : authToken,
             displayName : username,
             photoUrl : photoUrl,
             returnSecureToken : true

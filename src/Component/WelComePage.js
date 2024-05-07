@@ -4,10 +4,18 @@ import AuthContext from "../auth-context";
 import classes from "./WelcomePage.module.css";
 import ExpenseItem from "./ExpenseItem";
 import { useCallback } from "react";
+import { authAction } from "../store/authSlice";
+import { useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 
 const WelComePage = () => {
   const navigate = useNavigate();
-  const authCtx = useContext(AuthContext);
+  // const authCtx = useContext(AuthContext);
+const dispatch = useDispatch()
+const authToken = useSelector(state=>state.auth.token)
+const totalExpense = useSelector(state=>state.auth.totalExpense)
+
+
   const [usersDetails, setUserDetails] = useState({
     photoUrl: "",
     displayName: "",
@@ -27,7 +35,7 @@ const WelComePage = () => {
       {
         method: "POST",
         body: JSON.stringify({
-          idToken: authCtx.token,
+          idToken: authToken,
         }),
         headers: {
           "Content-Type": "applicaton/json",
@@ -35,7 +43,7 @@ const WelComePage = () => {
       }
     )
       .then((res) => {
-        console.log(res);
+        // console.log(res);
         if (res.ok) {
           return res.json();
         }
@@ -44,7 +52,7 @@ const WelComePage = () => {
         // console.log(data.users[0])
         setUserDetails(data.users[0]);
       });
-  }, [authCtx.token]);
+  }, [authToken]);
 
 
   const emailVerifyHandler = () => {
@@ -54,19 +62,20 @@ const WelComePage = () => {
         method: "POST",
         body: JSON.stringify({
           requestType: "VERIFY_EMAIL",
-          idToken: authCtx.token,
+          idToken: authToken,
         }),
         headers: {
           "Content-Type": "applicaton/json",
         },
       }
     ).then((res) => {
-      console.log(res, "vvvvv");
+      // console.log(res, "vvvvv");
     });
   };
 
   const logoutHandler = () => {
-    authCtx.logout();
+    // authCtx.logout();
+    dispatch(authAction.logout())
     navigate("/");
   };
 
@@ -87,15 +96,17 @@ const WelComePage = () => {
  
     try {
       const response = await fetch("https://authproject-16084-default-rtdb.firebaseio.com/expense.json");
-      console.log(response);
+      // console.log(response);
       if (!response.ok) {
         throw new Error("something went wrong ..retrying");
       }
       const dataJson = await response.json();
       console.log(dataJson);
       const loadedexpense = []
-    
+      
+      let totalExpense = 0
       for(let key in dataJson){
+        totalExpense +=  +dataJson[key].expensemoney
         loadedexpense.push({
           id : key,
           expensemoney : dataJson[key].expensemoney,
@@ -103,6 +114,7 @@ const WelComePage = () => {
           expensedescription : dataJson[key].expensedescription
         })
       }
+      dispatch(authAction.expenseCounter(totalExpense))
       
 
       
@@ -146,7 +158,7 @@ const WelComePage = () => {
 
 
   const deleteExpenseFun = async (id)=>{
-    console.log(id)
+    // console.log(id)
     await fetch(`https://authproject-16084-default-rtdb.firebaseio.com/expense/${id}.json`,{
       method: 'DELETE'
     })
@@ -155,7 +167,7 @@ const WelComePage = () => {
   }
 
   const  editExpenseFun = (exp)=>{
-    console.log(exp)
+    // console.log(exp)
     setEditExpense(true)
     setExpenseCategory(exp.expensecategory)
     setExpenseDescription(exp.expensedescription)
@@ -178,7 +190,7 @@ const WelComePage = () => {
         'Content-Type' : 'application/json'
       }
     }).then((res)=>{
-      console.log(res)
+      // console.log(res)
       fetchExpenseHandler()
       setEditExpense(false)
     setExpenseCategory('')
@@ -207,6 +219,10 @@ const WelComePage = () => {
             {" "}
             verify email {usersDetails.email}
           </button>
+        </div>
+        <div>
+        total Expense : {totalExpense}
+        {totalExpense>10000 && <button>Premium Button</button>}
         </div>
       </header>
 

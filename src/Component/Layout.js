@@ -4,10 +4,10 @@ import { AuthContextProvider } from '../auth-context'
 const Layout = (props) => {
   return (
     <>
-    <AuthContextProvider>
+    {/* <AuthContextProvider> */}
       {props.children}
 
-    </AuthContextProvider>
+    {/* </AuthContextProvider> */}
     </>
   )
 }
