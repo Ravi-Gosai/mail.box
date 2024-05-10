@@ -1,6 +1,6 @@
 import React from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import { darkModeAction } from '../store/darkmodeSlice'
+import { darkModeAction } from '../store/darkModeSlice'
 import './Layout.css'
 
 

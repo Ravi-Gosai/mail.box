@@ -7,6 +7,7 @@ import { useCallback } from "react";
 import { authAction } from "../store/authSlice";
 import { useSelector } from "react-redux";
 import { useDispatch } from "react-redux";
+import { CSVDownload, CSVLink } from "react-csv";
 
 const WelComePage = () => {
   const navigate = useNavigate();
@@ -27,7 +28,7 @@ const WelComePage = () => {
   const [expenseCategory, setExpenseCategory] = useState("");
   const [editExpense, setEditExpense] = useState(false);
   const idRef = useRef("");
-
+  const downExpense = useSelector(state=>state.auth.downLoadExpense)
   useEffect(() => {
     fetch(
       "https://identitytoolkit.googleapis.com/v1/accounts:lookup?key=AIzaSyCur9xCsh35ycJRAqP2U3DynKEpK8MDbj8",
@@ -193,11 +194,8 @@ const WelComePage = () => {
     });
   };
 
-  function makeCsv(row){
-    return row.map(r => r.join(',')).join('\n')
-  }
-  const downExpense = useSelector(state=>state.auth.downLoadExpense)
-  const blob = new Blob([makeCsv(downExpense)])
+  
+  
   return (
     <>
       <header className={classes.header}>
@@ -273,7 +271,9 @@ const WelComePage = () => {
           </button>
         )}
       </section>
-        <button><a href={URL.createObjectURL(blob)} download='file.csv'>downLoad Expense </a></button>
+        
+        <CSVLink data={downExpense}>download expense</CSVLink>
+        
       <section>
         {expenseList.map((expense) => (
           <ExpenseItem

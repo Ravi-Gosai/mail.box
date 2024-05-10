@@ -3,17 +3,11 @@ import ReactDOM from 'react-dom/client';
 import './index.css';
 import App from './App';
 import { BrowserRouter } from 'react-router-dom';
-import { configureStore } from '@reduxjs/toolkit';
-import authSlice from './store/authSlice';
-import { Provider } from 'react-redux';
-import  darkModeSlice  from './store/darkmodeSlice';
 
-const store = configureStore({
-  reducer : {
-    auth : authSlice,
-    darkmode : darkModeSlice
-  }
-})
+import { Provider } from 'react-redux';
+import store from './store';
+
+
 // console.log(store,'store')
 
 
