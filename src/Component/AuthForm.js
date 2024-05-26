@@ -113,7 +113,7 @@ const AuthForm = () => {
 
   return (
     <>
-    <Header></Header>
+    {/* <Header></Header> */}
     <section className={classes.auth}>
       <h1>{isLogin ? "Login" : "Sign Up"}</h1>
       <form>

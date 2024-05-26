@@ -4,8 +4,9 @@ const Header = () => {
   return (
     <>
     <div className=' header-main'> 
-      <h1>mail box</h1>
+      <h1>  mail box</h1>
     </div> 
+    
     </>
   )
 }
