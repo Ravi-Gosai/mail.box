@@ -6,6 +6,7 @@ import { useNavigate } from "react-router";
 import { useDispatch } from "react-redux";
 // import { useNavigate } from "react-router";
 import { authAction } from "../store/authSlice";
+import Header from "./Header";
 
 const AuthForm = () => {
   const [isLogin, setIsLogin] = useState(true);
@@ -35,7 +36,7 @@ const AuthForm = () => {
     let url;
     if (isLogin) {
       url =
-        "https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key=AIzaSyCur9xCsh35ycJRAqP2U3DynKEpK8MDbj8";
+        "https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key=AIzaSyCpDrn_T5nS2xI1qSHkdkYoigcnx1topC4";
     } else {
       const enteredConfirmPassword = inputConfirmPasswordRef.current.value;
       if (enteredConfirmPassword !== enteredPassword) {
@@ -43,7 +44,7 @@ const AuthForm = () => {
         return alert("password not match");
       }
       url =
-        "https://identitytoolkit.googleapis.com/v1/accounts:signUp?key=AIzaSyCur9xCsh35ycJRAqP2U3DynKEpK8MDbj8";
+        "https://identitytoolkit.googleapis.com/v1/accounts:signUp?key=AIzaSyCpDrn_T5nS2xI1qSHkdkYoigcnx1topC4";
     }
 
     fetch(url, {
@@ -93,7 +94,7 @@ const AuthForm = () => {
     const enteredEmail = inputEmailRef.current.value;
     console.log(enteredEmail);
     fetch(
-      "https://identitytoolkit.googleapis.com/v1/accounts:sendOobCode?key=AIzaSyCur9xCsh35ycJRAqP2U3DynKEpK8MDbj8",
+      "https://identitytoolkit.googleapis.com/v1/accounts:sendOobCode?key=AIzaSyCpDrn_T5nS2xI1qSHkdkYoigcnx1topC4",
       {
         method: "POST",
         body: JSON.stringify({
@@ -111,6 +112,8 @@ const AuthForm = () => {
   };
 
   return (
+    <>
+    <Header></Header>
     <section className={classes.auth}>
       <h1>{isLogin ? "Login" : "Sign Up"}</h1>
       <form>
@@ -185,6 +188,7 @@ const AuthForm = () => {
       </form>
       
     </section>
+    </>
   );
 };
 

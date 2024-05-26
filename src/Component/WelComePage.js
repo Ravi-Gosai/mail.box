@@ -31,7 +31,7 @@ const WelComePage = () => {
   const downExpense = useSelector(state=>state.auth.downLoadExpense)
   useEffect(() => {
     fetch(
-      "https://identitytoolkit.googleapis.com/v1/accounts:lookup?key=AIzaSyCur9xCsh35ycJRAqP2U3DynKEpK8MDbj8",
+      "https://identitytoolkit.googleapis.com/v1/accounts:lookup?key=AIzaSyCpDrn_T5nS2xI1qSHkdkYoigcnx1topC4",
       {
         method: "POST",
         body: JSON.stringify({
@@ -56,7 +56,7 @@ const WelComePage = () => {
 
   const emailVerifyHandler = () => {
     fetch(
-      "https://identitytoolkit.googleapis.com/v1/accounts:sendOobCode?key=AIzaSyCur9xCsh35ycJRAqP2U3DynKEpK8MDbj8",
+      "https://identitytoolkit.googleapis.com/v1/accounts:sendOobCode?key=AIzaSyCpDrn_T5nS2xI1qSHkdkYoigcnx1topC4",
       {
         method: "POST",
         body: JSON.stringify({
@@ -82,7 +82,7 @@ const WelComePage = () => {
   const fetchExpenseHandler = useCallback(async () => {
     try {
       const response = await fetch(
-        "https://authproject-16084-default-rtdb.firebaseio.com/expense.json"
+        "https://mail-box-d0c08-default-rtdb.firebaseio.com/mail.json"
       );
       // console.log(response);
       if (!response.ok) {
@@ -128,7 +128,7 @@ const WelComePage = () => {
       // id : Math.random()
     };
     await fetch(
-      "https://authproject-16084-default-rtdb.firebaseio.com/expense.json",
+      "https://mail-box-d0c08-default-rtdb.firebaseio.com/mail.json",
       {
         method: "POST",
         body: JSON.stringify(obj),
@@ -149,7 +149,7 @@ const WelComePage = () => {
   const deleteExpenseFun = async (id) => {
     // console.log(id)
     await fetch(
-      `https://authproject-16084-default-rtdb.firebaseio.com/expense/${id}.json`,
+      `https://mail-box-d0c08-default-rtdb.firebaseio.com/mail/${id}.json`,
       {
         method: "DELETE",
       }
@@ -174,7 +174,7 @@ const WelComePage = () => {
       // id : Math.random()
     };
     fetch(
-      `https://authproject-16084-default-rtdb.firebaseio.com/expense/${idRef.current}.json`,
+      `https://mail-box-d0c08-default-rtdb.firebaseio.com/mail/${idRef.current}.json`,
       {
         method: "PUT",
         body: JSON.stringify(obj),
@@ -199,7 +199,7 @@ const WelComePage = () => {
   return (
     <>
       <header className={classes.header}>
-        <h1>welcome to expense treacker </h1>
+        <h1>welcome to mail box </h1>
         <div>
           <p>
             {" "}
@@ -220,7 +220,7 @@ const WelComePage = () => {
         </div>
       </header>
 
-      <section className={classes.auth}>
+      {/* <section className={classes.auth}>
         <h1> expense from</h1>
         <form onSubmit={expenseFormHandler}>
           <div className={classes.control}>
@@ -283,7 +283,7 @@ const WelComePage = () => {
             exp={expense}
           />
         ))}
-      </section>
+      </section> */}
     </>
   );
 };

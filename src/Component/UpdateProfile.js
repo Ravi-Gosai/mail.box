@@ -18,7 +18,7 @@ const submitHandler = (e)=>{
     e.preventDefault()
     // console.log(username,photoUrl)
 
-    fetch('https://identitytoolkit.googleapis.com/v1/accounts:update?key=AIzaSyCur9xCsh35ycJRAqP2U3DynKEpK8MDbj8',{
+    fetch('https://identitytoolkit.googleapis.com/v1/accounts:update?key=AIzaSyCpDrn_T5nS2xI1qSHkdkYoigcnx1topC4',{
         method :'POST',
         body : JSON.stringify({
             idToken : authToken,
