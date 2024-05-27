@@ -8,6 +8,7 @@ import { authAction } from "../store/authSlice";
 import { useSelector } from "react-redux";
 import { useDispatch } from "react-redux";
 import { CSVDownload, CSVLink } from "react-csv";
+import SendEmail from "./SendEmail";
 
 const WelComePage = () => {
   const navigate = useNavigate();
@@ -219,6 +220,7 @@ const WelComePage = () => {
           {totalExpense > 10000 && <button>Premium Button</button>}
         </div>
       </header>
+      <SendEmail></SendEmail>
 
       {/* <section className={classes.auth}>
         <h1> expense from</h1>
